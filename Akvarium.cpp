@@ -4,8 +4,6 @@
 #include <cstdlib>
 #include <ctime>
 
-
-
 using namespace std;
 
 class Akvarium {
@@ -47,6 +45,10 @@ public:
 
         string GetName() const {
             return Frendlyfishs;
+        }
+
+        void EatAlgae() {
+            cout << Frendlyfishs << " съела водоросли!" << endl;
         }
     };
 
@@ -125,15 +127,15 @@ public:
 
 
     void DeleteFishRandomly(vector<FriendlyFish>& friendlyFishes, vector<FuckingFish>& fuckingFishes) {
-        srand(time(0)); 
+        srand(time(0));
 
         int randomIndex = rand() % 2;
 
         if (randomIndex == 0) {
             if (!friendlyFishes.empty()) {
-                int index = rand() % friendlyFishes.size(); 
+                int index = rand() % friendlyFishes.size();
                 cout << "Злая рыбка убила добрую рыбку: " << friendlyFishes[index].GetName() << endl;
-                friendlyFishes.erase(friendlyFishes.begin() + index); 
+                friendlyFishes.erase(friendlyFishes.begin() + index);
             }
             else {
                 cout << "Нет добрых рыб" << endl;
@@ -142,7 +144,7 @@ public:
 
         else {
             if (!fuckingFishes.empty()) {
-                int index = rand() % fuckingFishes.size(); 
+                int index = rand() % fuckingFishes.size();
                 cout << "Добрая рыбка выжила от атаки злой рыбки: " << fuckingFishes[index].GetName() << endl;
             }
             else {
@@ -150,8 +152,6 @@ public:
             }
         }
     }
-
-
 
 };
 
@@ -174,7 +174,8 @@ int main() {
         cout << "5. Добавить водоросли" << endl;
         cout << "6. Вывести информацию о всех рыбах" << endl;
         cout << "7. Встреча рыб" << endl;
-        cout << "8. Выход из программы" << endl;
+        cout << "8. Встреча доброй рыбки с водорослями" << endl; // Новый пункт меню
+        cout << "9. Выход из программы" << endl;
 
         cin >> choice;
 
@@ -227,7 +228,12 @@ int main() {
         case 7:
             Akvarium().DeleteFishRandomly(friendlyFishes, fuckingFishes);
             break;
-        case 8:
+        case 8: // Новый пункт меню для встречи доброй рыбки с водорослями
+            for (auto& fish : friendlyFishes) {
+                fish.EatAlgae();
+            }
+            break;
+        case 9:
             cout << "Вы успешно вышли из программы" << endl;
             break;
         default:
@@ -235,7 +241,8 @@ int main() {
             break;
         }
         cout << endl;
-    } while (choice != 8);
+    } while (choice != 9);
 
     return 0;
 }
+
