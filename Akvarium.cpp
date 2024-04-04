@@ -50,6 +50,21 @@ public:
         void EatAlgae() {
             cout << Frendlyfishs << " съела водоросли!" << endl;
         }
+
+        void LayEggs(vector<FriendlyFish>& friendlyFishes) {
+            srand(time(0));
+
+            int numEggs = rand() % 5 + 1; 
+
+            for (int i = 0; i < numEggs; ++i) {
+                string newName = Frendlyfishs + " (детёныш " + to_string(i + 1) + ")";
+                int newSize = Size / 2;
+                FriendlyFish babyFish(newName, newSize, View, Weight, Foot);
+                friendlyFishes.push_back(babyFish);
+            }
+
+            cout << Frendlyfishs << " отложила " << numEggs << " икринок. Вылупились новые рыбки!" << endl;
+        }
     };
 
     class FuckingFish {
@@ -174,9 +189,9 @@ int main() {
         cout << "5. Добавить водоросли" << endl;
         cout << "6. Вывести информацию о всех рыбах" << endl;
         cout << "7. Встреча рыб" << endl;
-        cout << "8. Встреча доброй рыбки с водорослями" << endl; // Новый пункт меню
-        cout << "9. Выход из программы" << endl;
-
+        cout << "8. Встреча доброй рыбки с водорослями" << endl; 
+        cout << "9. Рождение рыбки" << endl;
+        cout << "10. Выход из программы" << endl;
         cin >> choice;
 
         if (!(cin >> choice)) {
@@ -228,12 +243,31 @@ int main() {
         case 7:
             Akvarium().DeleteFishRandomly(friendlyFishes, fuckingFishes);
             break;
-        case 8: // Новый пункт меню для встречи доброй рыбки с водорослями
+        case 8: 
             for (auto& fish : friendlyFishes) {
                 fish.EatAlgae();
             }
             break;
         case 9:
+            if (!friendlyFishes.empty()) {
+                cout << "Выберите добрую рыбку, которая отложит икру и вылупит новых рыбок:" << endl;
+                for (int i = 0; i < friendlyFishes.size(); ++i) {
+                    cout << i + 1 << ". " << friendlyFishes[i].GetName() << endl;
+                }
+                int choiceFish;
+                cin >> choiceFish;
+                if (choiceFish >= 1 && choiceFish <= friendlyFishes.size()) {
+                    friendlyFishes[choiceFish - 1].LayEggs(friendlyFishes);
+                }
+                else {
+                    cout << "Ошибка: Неверный выбор доброй рыбки." << endl;
+                }
+            }
+            else {
+                cout << "Нет добрых рыб" << endl;
+            }
+            break;
+        case 10:
             cout << "Вы успешно вышли из программы" << endl;
             break;
         default:
@@ -241,8 +275,7 @@ int main() {
             break;
         }
         cout << endl;
-    } while (choice != 9);
+    } while (choice != 10);
 
     return 0;
 }
-
