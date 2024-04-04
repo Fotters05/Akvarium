@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
+
+
 
 using namespace std;
 
@@ -40,6 +44,10 @@ public:
             cout << "Вес рыбы: " << Weight << endl;
             cout << "Чем она будет питаться: " << Foot << endl;
         }
+
+        string GetName() const {
+            return Frendlyfishs;
+        }
     };
 
     class FuckingFish {
@@ -78,6 +86,10 @@ public:
             cout << "Вес рыбкы: " << Weight << endl;
             cout << "Чем она будет питаться: " << Foot << endl;
         }
+
+        string GetName() const {
+            return Fuckngfishs;
+        }
     };
 
     class Vodorosli {
@@ -99,13 +111,48 @@ public:
         cout << "Добрые рыбки (" << friendlyFishes.size() << "):" << endl;
         for (const auto& fish : friendlyFishes) {
             fish.InfoFriendlyFish();
+            cout << endl;
         }
+
+        cout << "----------------";
 
         cout << endl << "Злые рыбки (" << fuckingFishes.size() << "):" << endl;
         for (const auto& fish : fuckingFishes) {
             fish.InfoFuckingFish();
+            cout << endl;
         }
     }
+
+
+    void DeleteFishRandomly(vector<FriendlyFish>& friendlyFishes, vector<FuckingFish>& fuckingFishes) {
+        srand(time(0)); 
+
+        int randomIndex = rand() % 2;
+
+        if (randomIndex == 0) {
+            if (!friendlyFishes.empty()) {
+                int index = rand() % friendlyFishes.size(); 
+                cout << "Злая рыбка убила добрую рыбку: " << friendlyFishes[index].GetName() << endl;
+                friendlyFishes.erase(friendlyFishes.begin() + index); 
+            }
+            else {
+                cout << "Нет добрых рыб" << endl;
+            }
+        }
+
+        else {
+            if (!fuckingFishes.empty()) {
+                int index = rand() % fuckingFishes.size(); 
+                cout << "Добрая рыбка выжила от атаки злой рыбки: " << fuckingFishes[index].GetName() << endl;
+            }
+            else {
+                cout << "Нет злых рыб" << endl;
+            }
+        }
+    }
+
+
+
 };
 
 int main() {
@@ -126,8 +173,8 @@ int main() {
         cout << "4. Информация о хищной рыбке" << endl;
         cout << "5. Добавить водоросли" << endl;
         cout << "6. Вывести информацию о всех рыбах" << endl;
-        cout << "7. Выход из программы" << endl;
-
+        cout << "7. Встреча рыб" << endl;
+        cout << "8. Выход из программы" << endl;
 
         cin >> choice;
 
@@ -178,6 +225,9 @@ int main() {
             Akvarium().InfoAllFish(friendlyFishes, fuckingFishes);
             break;
         case 7:
+            Akvarium().DeleteFishRandomly(friendlyFishes, fuckingFishes);
+            break;
+        case 8:
             cout << "Вы успешно вышли из программы" << endl;
             break;
         default:
@@ -185,7 +235,7 @@ int main() {
             break;
         }
         cout << endl;
-    } while (choice != 7);
+    } while (choice != 8);
 
     return 0;
 }
