@@ -47,23 +47,24 @@ public:
             return Frendlyfishs;
         }
 
-        void EatAlgae() {
-            cout << Frendlyfishs << " съела водоросли!" << endl;
+        int GetSize() const {
+            return Size;
         }
 
-        void LayEggs(vector<FriendlyFish>& friendlyFishes) {
-            srand(time(0));
+        string GetView() const {
+            return View;
+        }
 
-            int numEggs = rand() % 5 + 1; 
+        double GetWeight() const {
+            return Weight;
+        }
 
-            for (int i = 0; i < numEggs; ++i) {
-                string newName = Frendlyfishs + " (детёныш " + to_string(i + 1) + ")";
-                int newSize = Size / 2;
-                FriendlyFish babyFish(newName, newSize, View, Weight, Foot);
-                friendlyFishes.push_back(babyFish);
-            }
+        string GetFoot() const {
+            return Foot;
+        }
 
-            cout << Frendlyfishs << " отложила " << numEggs << " икринок. Вылупились новые рыбки!" << endl;
+        void EatAlgae() {
+            cout << Frendlyfishs << " съела водоросли!" << endl;
         }
     };
 
@@ -131,15 +132,14 @@ public:
             cout << endl;
         }
 
-        cout << "----------------";
+        cout << "----------------" << endl;
 
-        cout << endl << "Злые рыбки (" << fuckingFishes.size() << "):" << endl;
+        cout << "Злые рыбки (" << fuckingFishes.size() << "):" << endl;
         for (const auto& fish : fuckingFishes) {
             fish.InfoFuckingFish();
             cout << endl;
         }
     }
-
 
     void DeleteFishRandomly(vector<FriendlyFish>& friendlyFishes, vector<FuckingFish>& fuckingFishes) {
         srand(time(0));
@@ -156,7 +156,6 @@ public:
                 cout << "Нет добрых рыб" << endl;
             }
         }
-
         else {
             if (!fuckingFishes.empty()) {
                 int index = rand() % fuckingFishes.size();
@@ -168,6 +167,20 @@ public:
         }
     }
 
+    void LayEggs(FriendlyFish& friendlyFish, vector<FriendlyFish>& friendlyFishes) {
+        srand(time(0));
+
+        int numEggs = rand() % 5 + 1;
+
+        for (int i = 0; i < numEggs; ++i) {
+            string newName = friendlyFish.GetName() + " (детёныш " + to_string(i + 1) + ")";
+            int newSize = friendlyFish.GetSize() / 2;
+            FriendlyFish babyFish(newName, newSize, friendlyFish.GetView(), friendlyFish.GetWeight(), friendlyFish.GetFoot());
+            friendlyFishes.push_back(babyFish);
+        }
+
+        cout << friendlyFish.GetName() << " отложила " << numEggs << " икринок. Вылупились новые рыбки!" << endl;
+    }
 };
 
 int main() {
@@ -179,8 +192,6 @@ int main() {
 
     int choice;
     do {
-        setlocale(LC_ALL, "Rus");
-
         cout << "Добро пожаловать в аквариум Рамиля и Никиты!" << endl;
         cout << "1. Добавить добрую рыбу" << endl;
         cout << "2. Информация о доброй рыбке" << endl;
@@ -189,7 +200,7 @@ int main() {
         cout << "5. Добавить водоросли" << endl;
         cout << "6. Вывести информацию о всех рыбах" << endl;
         cout << "7. Встреча рыб" << endl;
-        cout << "8. Встреча доброй рыбки с водорослями" << endl; 
+        cout << "8. Встреча доброй рыбки с водорослями" << endl;
         cout << "9. Рождение рыбки" << endl;
         cout << "10. Выход из программы" << endl;
         cin >> choice;
@@ -200,6 +211,7 @@ int main() {
             cin.ignore(1000, '\n');
             continue;
         }
+
 
         switch (choice) {
         case 1: {
@@ -243,7 +255,7 @@ int main() {
         case 7:
             Akvarium().DeleteFishRandomly(friendlyFishes, fuckingFishes);
             break;
-        case 8: 
+        case 8:
             for (auto& fish : friendlyFishes) {
                 fish.EatAlgae();
             }
@@ -257,7 +269,7 @@ int main() {
                 int choiceFish;
                 cin >> choiceFish;
                 if (choiceFish >= 1 && choiceFish <= friendlyFishes.size()) {
-                    friendlyFishes[choiceFish - 1].LayEggs(friendlyFishes);
+                    Akvarium().LayEggs(friendlyFishes[choiceFish - 1], friendlyFishes);
                 }
                 else {
                     cout << "Ошибка: Неверный выбор доброй рыбки." << endl;
