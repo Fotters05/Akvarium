@@ -21,7 +21,6 @@ public:
             :Frendlyfishs(frendlyfishs), Size(size), View(view), Weight(weight), Foot(foot) {}
 
         void CreateFriendlyFish() {
-            setlocale(LC_ALL, "Rus");
             cout << "Введите не хищную рыбы: " << Frendlyfishs << endl;
             cin >> Frendlyfishs;
             cout << "Размер рыбки: " << Size << endl;
@@ -173,14 +172,19 @@ public:
         int numEggs = rand() % 5 + 1;
 
         for (int i = 0; i < numEggs; ++i) {
-            string newName = friendlyFish.GetName() + " (детёныш " + to_string(i + 1) + ")";
+            string newName = "Детёныш_" + to_string(i + 1);
             int newSize = friendlyFish.GetSize() / 2;
-            FriendlyFish babyFish(newName, newSize, friendlyFish.GetView(), friendlyFish.GetWeight(), friendlyFish.GetFoot());
+            string newView = friendlyFish.GetView();
+            double newWeight = friendlyFish.GetWeight();
+            string newFoot = friendlyFish.GetFoot();
+            FriendlyFish babyFish(newName, newSize, newView, newWeight, newFoot);
             friendlyFishes.push_back(babyFish);
         }
 
-        cout << friendlyFish.GetName() << " отложила " << numEggs << " икринок. Вылупились новые рыбки!" << endl;
+        cout << "Икра от рыбы " << friendlyFish.GetName() << " успешно выложена. Вылупилось " << numEggs << " детёнышей!" << endl;
     }
+
+
 };
 
 int main() {
@@ -211,7 +215,6 @@ int main() {
             cin.ignore(1000, '\n');
             continue;
         }
-
 
         switch (choice) {
         case 1: {
@@ -291,3 +294,4 @@ int main() {
 
     return 0;
 }
+
