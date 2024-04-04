@@ -166,23 +166,23 @@ public:
         }
     }
 
-    void LayEggs(FriendlyFish& friendlyFish, vector<FriendlyFish>& friendlyFishes) {
-        srand(time(0));
-
-        int numEggs = rand() % 5 + 1;
-
-        for (int i = 0; i < numEggs; ++i) {
-            string newName = "Детёныш_" + to_string(i + 1);
-            int newSize = friendlyFish.GetSize() / 2;
-            string newView = friendlyFish.GetView();
-            double newWeight = friendlyFish.GetWeight();
-            string newFoot = friendlyFish.GetFoot();
-            FriendlyFish babyFish(newName, newSize, newView, newWeight, newFoot);
-            friendlyFishes.push_back(babyFish);
-        }
-
-        cout << "Икра от рыбы " << friendlyFish.GetName() << " успешно выложена. Вылупилось " << numEggs << " детёнышей!" << endl;
-    }
+    //void LayEggs(FriendlyFish& friendlyFish, vector<FriendlyFish>& friendlyFishes) {
+    //    srand(time(0));
+    //
+    //    int numEggs = rand() % 5 + 1;
+    //
+    //    for (int i = 0; i < numEggs; ++i) {
+    //        string newName = "Детёныш_" + to_string(i + 1);
+    //        int newSize = friendlyFish.GetSize();
+    //        string newView = friendlyFish.GetView();
+    //        double newWeight = friendlyFish.GetWeight();
+    //        string newFoot = friendlyFish.GetFoot();
+    //        FriendlyFish babyFish(newName, newSize, newView, newWeight, newFoot);
+    //        friendlyFishes.push_back(babyFish);
+    //    }
+    //
+    //    cout << "Икра от рыбы " << friendlyFish.GetName() << " успешно выложена. Вылупилось " << numEggs << " детёнышей!" << endl;
+    //}
 
 
 };
@@ -205,8 +205,7 @@ int main() {
         cout << "6. Вывести информацию о всех рыбах" << endl;
         cout << "7. Встреча рыб" << endl;
         cout << "8. Встреча доброй рыбки с водорослями" << endl;
-        cout << "9. Рождение рыбки" << endl;
-        cout << "10. Выход из программы" << endl;
+        cout << "9. Выход из программы" << endl;
         cin >> choice;
 
         if (!(cin >> choice)) {
@@ -263,26 +262,26 @@ int main() {
                 fish.EatAlgae();
             }
             break;
+        //case 9:
+        //    if (!friendlyFishes.empty()) {
+        //        cout << "Выберите добрую рыбку, которая отложит икру и вылупит новых рыбок:" << endl;
+        //        for (int i = 0; i < friendlyFishes.size(); ++i) {
+        //            cout << i + 1 << ". " << friendlyFishes[i].GetName() << endl;
+        //        }
+        //        int choiceFish;
+        //        cin >> choiceFish;
+        //        if (choiceFish >= 1 && choiceFish <= friendlyFishes.size()) {
+        //            Akvarium().LayEggs(friendlyFishes[choiceFish - 1], friendlyFishes);
+        //        }
+        //        else {
+        //            cout << "Ошибка: Неверный выбор доброй рыбки." << endl;
+        //        }
+        //    }
+        //    else {
+        //        cout << "Нет добрых рыб" << endl;
+        //    }
+        //    break;
         case 9:
-            if (!friendlyFishes.empty()) {
-                cout << "Выберите добрую рыбку, которая отложит икру и вылупит новых рыбок:" << endl;
-                for (int i = 0; i < friendlyFishes.size(); ++i) {
-                    cout << i + 1 << ". " << friendlyFishes[i].GetName() << endl;
-                }
-                int choiceFish;
-                cin >> choiceFish;
-                if (choiceFish >= 1 && choiceFish <= friendlyFishes.size()) {
-                    Akvarium().LayEggs(friendlyFishes[choiceFish - 1], friendlyFishes);
-                }
-                else {
-                    cout << "Ошибка: Неверный выбор доброй рыбки." << endl;
-                }
-            }
-            else {
-                cout << "Нет добрых рыб" << endl;
-            }
-            break;
-        case 10:
             cout << "Вы успешно вышли из программы" << endl;
             break;
         default:
@@ -290,7 +289,7 @@ int main() {
             break;
         }
         cout << endl;
-    } while (choice != 10);
+    } while (choice != 9);
 
     return 0;
 }
